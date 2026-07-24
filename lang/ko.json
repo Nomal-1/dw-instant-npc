@@ -1,0 +1,10 @@
+{
+  "DWIN": {
+    "RollButton": "이름 · 본능 · 재주 무작위 생성",
+    "RollButtonTitleVanilla": "이 NPC의 이름, 본능, 재주를 한 번에 무작위로 생성합니다.",
+    "RollButtonTitleUsed": "이미 생성된 NPC입니다. 다시 생성하려면 새 NPC 액터를 만드세요.",
+    "Instinct": "본능",
+    "Trait": "재주",
+    "Generated": "NPC 생성 완료: {name}"
+  }
+}
