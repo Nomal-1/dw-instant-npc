@@ -2,7 +2,7 @@
   "id": "dw-instant-npc",
   "title": "던전월드 인스턴트 NPC 생성기",
   "description": "던전월드(Dungeon World) NPC 시트에 이름·본능·재주를 한 번에 무작위로 채워주는 버튼을 추가합니다. 부록3 인스턴트 NPC 표(본능 100 × 재주 100) 기반입니다.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "12",
     "verified": "12.331",

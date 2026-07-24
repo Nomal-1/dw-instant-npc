@@ -1,3 +1,7 @@
+.dwin-tab {
+  padding: 12px 4px;
+}
+
 .dwin-panel {
   margin: 8px 0 12px;
   padding: 10px 12px;
@@ -22,15 +26,8 @@
   line-height: normal;
 }
 
-.dwin-roll-btn:hover:not(:disabled) {
+.dwin-roll-btn:hover {
   filter: brightness(1.1);
-}
-
-.dwin-roll-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  background: #555;
-  border-color: #333;
 }
 
 .dwin-result {

@@ -1,12 +1,7 @@
 import { INSTINCTS, TRAITS, NAMES } from "./data.js";
 
 const MODULE_ID = "dw-instant-npc";
-
-function isVanilla(actor) {
-  const instinctNum = actor.getFlag(MODULE_ID, "instinctNum");
-  const traitNum = actor.getFlag(MODULE_ID, "traitNum");
-  return !instinctNum && !traitNum;
-}
+const TAB_KEY = "dwin-random";
 
 async function rollNpc(actor) {
   const name = NAMES[Math.floor(Math.random() * NAMES.length)];
@@ -24,45 +19,47 @@ async function rollNpc(actor) {
   ui.notifications.info(game.i18n.format("DWIN.Generated", { name }));
 }
 
-function injectPanel(app, html) {
+function injectTab(app, html) {
   if (game.system.id !== "dungeonworld") return;
   if (app.actor?.type !== "npc") return;
   if (!game.user.isGM) return;
 
   const actor = app.actor;
-  const vanilla = isVanilla(actor);
   const instinct = actor.getFlag(MODULE_ID, "instinct");
   const instinctNum = actor.getFlag(MODULE_ID, "instinctNum");
   const trait = actor.getFlag(MODULE_ID, "trait");
   const traitNum = actor.getFlag(MODULE_ID, "traitNum");
 
-  const title = game.i18n.localize(vanilla ? "DWIN.RollButtonTitleVanilla" : "DWIN.RollButtonTitleUsed");
+  const $navLink = $(`<a class="item" data-tab="${TAB_KEY}">${game.i18n.localize("DWIN.TabLabel")}</a>`);
+  html.find('.sheet-tabs[data-group="primary"]').append($navLink);
 
-  const $panel = $(`
-    <section class="dwin-panel">
-      <button type="button" class="dwin-roll-btn" title="${title}" ${vanilla ? "" : "disabled"}>
-        <i class="fas fa-dice-d20"></i> ${game.i18n.localize("DWIN.RollButton")}
-      </button>
-      <div class="dwin-result">
-        <div class="dwin-result-row">
-          <span class="dwin-label">${game.i18n.localize("DWIN.Instinct")}</span>
-          <span class="dwin-value">${instinct ? `#${instinctNum} ${instinct}` : "—"}</span>
+  const $tabBody = $(`
+    <div class="tab ${TAB_KEY}" data-group="primary" data-tab="${TAB_KEY}">
+      <section class="sheet-tab dwin-tab">
+        <div class="dwin-panel">
+          <button type="button" class="dwin-roll-btn" title="${game.i18n.localize("DWIN.RollButtonTitle")}">
+            <i class="fas fa-dice-d20"></i> ${game.i18n.localize("DWIN.RollButton")}
+          </button>
+          <div class="dwin-result">
+            <div class="dwin-result-row">
+              <span class="dwin-label">${game.i18n.localize("DWIN.Instinct")}</span>
+              <span class="dwin-value">${instinct ? `#${instinctNum} ${instinct}` : "—"}</span>
+            </div>
+            <div class="dwin-result-row">
+              <span class="dwin-label">${game.i18n.localize("DWIN.Trait")}</span>
+              <span class="dwin-value">${trait ? `#${traitNum} ${trait}` : "—"}</span>
+            </div>
+          </div>
         </div>
-        <div class="dwin-result-row">
-          <span class="dwin-label">${game.i18n.localize("DWIN.Trait")}</span>
-          <span class="dwin-value">${trait ? `#${traitNum} ${trait}` : "—"}</span>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   `);
+  html.find(".sheet-body").append($tabBody);
 
-  html.find(".sheet-header").after($panel);
-
-  $panel.find(".dwin-roll-btn").on("click", async (event) => {
+  $tabBody.find(".dwin-roll-btn").on("click", async (event) => {
     event.preventDefault();
-    if (!isVanilla(actor)) return;
     await rollNpc(actor);
   });
 }
 
-Hooks.on("renderActorSheet", injectPanel);
+Hooks.on("renderActorSheet", injectTab);

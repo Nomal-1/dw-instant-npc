@@ -1,8 +1,8 @@
 {
   "DWIN": {
+    "TabLabel": "Random Gen",
     "RollButton": "Roll Name · Instinct · Trait",
-    "RollButtonTitleVanilla": "Randomly generate this NPC's name, instinct, and trait all at once.",
-    "RollButtonTitleUsed": "This NPC has already been generated. Create a new NPC actor to roll again.",
+    "RollButtonTitle": "Randomly re-roll this NPC's name, instinct, and trait. Can be repeated any number of times.",
     "Instinct": "Instinct",
     "Trait": "Trait",
     "Generated": "NPC generated: {name}"
